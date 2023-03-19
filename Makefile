@@ -3,7 +3,7 @@ install:
 	pip install --upgrade pip && pip install -r requirements.txt
 format:
 	#format
-	black *.py
+	black *.py mylib/*.py
 lint:
 	#lint
 	pylint --disable=R, C hello.py
