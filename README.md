@@ -22,7 +22,7 @@
 5. black - Code formatting
 6. fire - Create commandline tool
 
-#### Makefile update
+### Makefile update
 ````makefile
 install:
 	#install
