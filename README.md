@@ -21,7 +21,7 @@
 6. fire - Create commandline tool
 
 #### Makefile update
-
+````makefile
 install:
 	#install
 	pip install --upgrade pip && pip install -r requirements.txt
@@ -37,5 +37,6 @@ test:
 deploy:
 	#deploy
 all: install lint test deploy
+````
 
 The run `make install`. After all the packages are installed run `pip freeze` and update the requirements.txt file with the current versions installed.
