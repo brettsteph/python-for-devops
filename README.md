@@ -1,6 +1,6 @@
 # python-for-devops
 
-![Drawing sketchpad](https://user-images.githubusercontent.com/3052677/226190383-2c031af7-6e85-4259-8c95-88877d7b8a5d.png)
+![Drawing-1 sketchpad](https://user-images.githubusercontent.com/3052677/226196359-77297233-de3c-40ac-9433-c4681825a16b.png)
 
 
 ## Scaffold
