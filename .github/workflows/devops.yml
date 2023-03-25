@@ -25,7 +25,7 @@ jobs:
       
     - name: Format code
       run: |
-        #make format
+        make format
 
     - name: Lint with pylint
       run: |
