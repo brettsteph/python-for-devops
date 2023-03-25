@@ -17,6 +17,8 @@ lint:
 test:
 	#test with pytest
 	python -m pytest -vv *.py mylib/*.py
+build:
+	#build container
 deploy:
 	#deploy
 all: install lint test deploy
