@@ -1,6 +1,7 @@
 install:
 	#install
 	python -m pip install --upgrade pip
+	python -m textblob.download_corpora
 	pip install ruff pytest
 	if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 format:
