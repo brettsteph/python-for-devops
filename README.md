@@ -17,6 +17,7 @@
 4. Populate `Makefile`
 5. Setup Continous Integration, i.e. check code for lint errors
 ![lint-failure](https://user-images.githubusercontent.com/3052677/227738996-8913c069-ceb6-49f3-9228-93f0ec2afb5e.png)
+6. Build cli using Python Fire Library `./cli-fire.py --help` to test the logic.
 
 ### Requirements.txt
 
