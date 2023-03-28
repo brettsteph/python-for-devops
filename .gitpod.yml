@@ -5,9 +5,8 @@
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
 
 tasks:
-  - name: Terminal 1
-    init: make
   - name: Create Python Virtual environment
     command: virtualenv .venv
   - name: Activate Python Virtual environment
     command: source .venv/bin/activate
+  - init: make
