@@ -34,4 +34,12 @@ jobs:
     - name: Test with pytest
       run: |
         make test
+
+    - name: Build container
+      run: |
+        make build
+
+    - name: Run container
+      run: |
+        make run
       

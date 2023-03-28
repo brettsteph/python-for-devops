@@ -6,11 +6,11 @@ install:
 	python -m textblob.download_corpora
 format:
 	#format
-	black *.py mylib/*.py
+	black *.py mylib/**/*.py
 lint:
 	#Lint
 	# Disable warning -> --disable=R,C
-	pylint --disable=R,C *.py mylib/*.py
+	pylint --disable=R,C *.py mylib/**/*.py
 test:
 	#test with pytest
 	# To use TestClient install httpx
@@ -18,6 +18,10 @@ test:
 	python -m pytest -vv --cov=mylib --cov=main mylib/tests/test_*.py
 build:
 	#build container
+	docker build -t deploy-fastapi .
+run:
+	#run docker
+	docker run -p 8080:8080 92303252d388
 deploy:
 	#deploy
 all: install lint test deploy
