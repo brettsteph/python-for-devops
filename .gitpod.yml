@@ -6,8 +6,8 @@
 
 tasks:
   - name: Terminal 1
-    before: echo "Hello Terminal 1!"
     init: make
-  - name: Terminal 2
-    before: echo "Hello Terminal 2!"
-    init: source /workspace/*/.venv/bin/activate
+  - name: Create Python Virtual environment
+    command: virtualenv /workspace/*/.venv
+  - name: Activate Python Virtual environment
+    command: source /workspace/*/.venv/bin/activate

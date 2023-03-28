@@ -11,7 +11,7 @@
 
 ### Setup
 
-1. Create a Python Virtual Environment: `python3 -m venv /workspace/*/.venv` or `virtualenv /workspace/*/.venv` (I used `virtualenv /workspace/**/.venv`)
+1. Create a Python Virtual Environment: `python3 -m venv /workspace/*/.venv` or `virtualenv /workspace/*/.venv` (I used `virtualenv /workspace/*/.venv`)
 2. Add virtual environment source to the bottom of the .bashrc file `vim ~/.bashrc` --> `source /workspace/*/.venv/bin/activate`
 3. Create empty files using the `touch` command `Dockerfile` `Makefile` `requirements.txt` `mylib` `mylib/__init__.py` `mylib/logic.py` `main.py`(for microservice)4. 
 4. Populate `Makefile`
