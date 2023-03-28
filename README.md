@@ -29,23 +29,35 @@
 6. fire - Create commandline tool
 
 ### Makefile update
-````makefile
+```makefile
 install:
 	#install
-	pip install --upgrade pip && pip install -r requirements.txt
+	python -m pip install --upgrade pip
+	pip install ruff pytest
+	if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+	python -m textblob.download_corpora
 format:
 	#format
-	black *.py mylib/*.py
+	black *.py mylib/**/*.py
 lint:
-	#lint
-	pylint --disable=R,C *.py mylib/*.py
+	#Lint
+	# Disable warning -> --disable=R,C
+	pylint --disable=R,C *.py mylib/**/*.py
 test:
-	#test
-	python -m pytest -vv *.py mylib/*.py
+	#test with pytest
+	# To use TestClient install httpx
+	pip install httpx
+	python -m pytest -vv --cov=mylib --cov=main mylib/tests/test_*.py
+build:
+	#build container
+	docker build -t deploy-fastapi .
+run:
+	#run docker -> copy and paste to run manually
+	# docker run -p 8080:8080 <image_name>
 deploy:
-	#deploy
+	#deploy to container registry of choice
 all: install lint test deploy
-````
+```
 
 The run `make install`. After all the packages are installed run `pip freeze` and update the requirements.txt file with the current versions installed.
 
@@ -54,3 +66,16 @@ The run `make install`. After all the packages are installed run `pip freeze` an
 Build and tag docker image: `docker build -t deploy-fastapi .`.
 
 Run docker: `docker run -p 8080:8080 <image_id>`.
+
+### AWS CodeBuild
+
+Add `buildspec.yml` file to repository with the following: 
+
+```yaml
+version: 0.2
+
+phases:
+	build:
+		commands:
+			- make all
+```
