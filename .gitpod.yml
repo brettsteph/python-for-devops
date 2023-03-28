@@ -8,4 +8,4 @@ tasks:
   - name: Create Python Virtual environment
     before: virtualenv .venv
     command: source .venv/bin/activate
-  # - init: make
+    init: make
