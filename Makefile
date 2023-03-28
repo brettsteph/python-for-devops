@@ -23,6 +23,6 @@ run:
 	#run docker -> copy and paste to run manually
 	# docker run -p 8080:8080 <image_name>
 deploy:
-	#deploy
+	#deploy to container registry
 all: install lint test deploy
 	
