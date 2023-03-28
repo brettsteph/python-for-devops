@@ -11,8 +11,8 @@
 
 ### Setup
 
-1. Create a Python Virtual Environment: `python3 -m venv /workspace/*/.venv` or `virtualenv /workspace/*/.venv` (I used `virtualenv /workspace/*/.venv`)
-2. Add virtual environment source to the bottom of the .bashrc file `vim ~/.bashrc` --> `source /workspace/*/.venv/bin/activate`
+1. Create a Python Virtual Environment: `python3 -m venv /workspace/**/.venv` or `virtualenv /workspace/**/.venv` (I used `virtualenv /workspace/**/.venv`)
+2. Add virtual environment source to the bottom of the .bashrc file `vim ~/.bashrc` --> `source /workspace/**/.venv/bin/activate`
 3. Create empty files using the `touch` command `Dockerfile` `Makefile` `requirements.txt` `mylib` `mylib/__init__.py` `mylib/logic.py` `main.py`(for microservice)4. 
 4. Populate `Makefile`
 5. Setup Continous Integration, i.e. check code for lint errors
@@ -48,3 +48,9 @@ all: install lint test deploy
 ````
 
 The run `make install`. After all the packages are installed run `pip freeze` and update the requirements.txt file with the current versions installed.
+
+### Containerize FastAPI
+
+Build and tag docker image: `docker build -t deploy-fastapi .`.
+
+Run docker: `docker run -p 8080:8080 <image_id>`.
