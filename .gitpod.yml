@@ -5,6 +5,9 @@
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
 
 tasks:
-  - init: make
-
-
+  - name: Terminal 1
+    before: Hello Terminal 1!
+    init: make
+  - name: Terminal 2
+    before: Hello Terminal 2!
+    command: source /workspace/*/.venv/bin/activate
