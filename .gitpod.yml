@@ -6,6 +6,6 @@
 
 tasks:
   - name: Create Python Virtual environment
-    command: virtualenv .venv
-    init: source .venv/bin/activate
+    before: virtualenv .venv
+    command: source .venv/bin/activate
   # - init: make
