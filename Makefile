@@ -20,8 +20,8 @@ build:
 	#build container
 	docker build -t deploy-fastapi .
 run:
-	#run docker
-	docker run -p 8080:8080 92303252d388
+	#run docker -> copy and paste to run manually
+	# docker run -p 8080:8080 <image_name>
 deploy:
 	#deploy
 all: install lint test deploy
