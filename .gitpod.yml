@@ -8,6 +8,6 @@ tasks:
   - name: Terminal 1
     init: make
   - name: Create Python Virtual environment
-    command: virtualenv /workspace/*/.venv
+    command: virtualenv .venv
   - name: Activate Python Virtual environment
-    command: source /workspace/*/.venv/bin/activate
+    command: source .venv/bin/activate
