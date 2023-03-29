@@ -25,7 +25,7 @@
 
 1. wikipedia - Access and parse data in Wikipedia
 2. pytest - Testing
-3. pytest-cov - How many lines of code are covered
+3. pytest-cov - Coverage measurement used to gauge the effectiveness of tests
 4. pylint - Code linting
 5. black - Code formatting
 6. fire - Create commandline tool
