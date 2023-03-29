@@ -18,7 +18,7 @@ test:
 	python -m pytest -vv --cov=mylib --cov=main mylib/tests/test_*.py
 build:
 	#build container
-	# docker build -t deploy-fastapi .
+	docker build -t deploy-fastapi .
 run:
 	#run docker -> copy and paste to run manually
 	# docker run -p 8080:8080 <image_name>
