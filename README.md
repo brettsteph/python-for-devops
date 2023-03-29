@@ -5,9 +5,10 @@
 <!-- ![Drawing-1 sketchpad](https://user-images.githubusercontent.com/3052677/226196359-77297233-de3c-40ac-9433-c4681825a16b.png) -->
 
 
-## Scaffold
+## Scaffold CICD
 
-![Drawing sketchpad](https://user-images.githubusercontent.com/3052677/226187972-2d801181-b1b5-4fac-8a68-9dddefae0289.png)
+![Scaffold CICD](https://user-images.githubusercontent.com/3052677/228578974-efa6633a-7495-41d6-b5ed-d0ec305fc0bd.png)
+
 
 ### Setup
 
