@@ -7,7 +7,7 @@ client = TestClient(app)
 def test_read_main():
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json() == {"message": "Wikipedia API. Call /search or /wiki"}
+    assert response.json() == {"message": "Wikipedia API. Call /search, /wiki, or /phrase"}
 
 
 def test_read_phrase():
