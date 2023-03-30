@@ -7,28 +7,22 @@ on:
 #     branches: [ "main" ]
 
 jobs:
-  install:
+  build:
+
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v3
     
     - name: Set up Python 3.8
       uses: actions/setup-python@v4
       with:
-        python-version: 3.8  
+        python-version: 3.8
+
     - name: Install dependencies
       run: |
         make install
-        
-  format-lint-test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v4
-      with:
-        python-version: 3.8  
+      
     - name: Format code
       run: |
         make format
