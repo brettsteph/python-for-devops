@@ -8,7 +8,7 @@
 
 ## Scaffold CICD
 
-![Scaffold CICD]((https://user-images.githubusercontent.com/3052677/228934514-6e14a978-159a-4ee0-b615-154ea9b22289.png)
+![Scaffold CICD](https://user-images.githubusercontent.com/3052677/228934514-6e14a978-159a-4ee0-b615-154ea9b22289.png)
 
 ### Setup
 
