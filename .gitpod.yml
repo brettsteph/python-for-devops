@@ -8,4 +8,7 @@ tasks:
   - name: Create Python Virtual environment
     before: virtualenv .venv
     command: source .venv/bin/activate
-    init: make
+    # init: make
+  - name: Export AWS Credentials
+    before: chmod +x aws_credentials.sh
+    command: ./aws_credentials.sh
