@@ -135,13 +135,13 @@ resource "aws_codebuild_project" "example" {
   service_role = aws_iam_role.example.arn
 
   source {
-    type                = "GITHUB"
+    type = "GITHUB"
     # buildspec           = "buildspec.yml"
     location            = "https://github.com/brettsteph/python-for-devops.git"
     git_clone_depth     = 1
     report_build_status = true
   }
-  badge_enabled         = true
+  badge_enabled = true
 
   #   source {
   #     type            = "GITHUB"
