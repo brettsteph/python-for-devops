@@ -38,16 +38,6 @@ resource "aws_codebuild_project" "example" {
     image_pull_credentials_type = "CODEBUILD"
     privileged_mode             = true
 
-    # environment_variable {
-    #   name  = "SOME_KEY1"
-    #   value = "SOME_VALUE1"
-    # }
-
-    # environment_variable {
-    #   name  = "SOME_KEY2"
-    #   value = "SOME_VALUE2"
-    #   type  = "PARAMETER_STORE"
-    # }
   }
 
   service_role = "arn:aws:iam::247232402049:role/code-build-only-aws-service-role"
@@ -61,48 +51,12 @@ resource "aws_codebuild_project" "example" {
   }
   badge_enabled = true
 
-  #   source {
-  #     type            = "GITHUB"
-  #     location        = "https://github.com/mitchellh/packer.git"
-  #     git_clone_depth = 1
-
-  #     git_submodules_config {
-  #       fetch_submodules = true
-  #     }
-  #   }
-
-  #   logs_config {
-  #     cloudwatch_logs {
-  #       group_name  = "log-group"
-  #       stream_name = "log-stream"
-  #     }
-
-  #     s3_logs {
-  #       status   = "ENABLED"
-  #       location = "${aws_s3_bucket.example.id}/build-log"
-  #     }
-  #   }  
-
   description   = "Build Wikipedia Service"
   build_timeout = "5"
 
   # source_version = "main"
 
-  #   vpc_config {
-  #     vpc_id = aws_vpc.example.id
-
-  #     subnets = [
-  #       aws_subnet.example1.id,
-  #       aws_subnet.example2.id,
-  #     ]
-
-  #     security_group_ids = [
-  #       aws_security_group.example1.id,
-  #       aws_security_group.example2.id,
-  #     ]
-  #   }
-
   tags = {
-    Environment = "Test"
+    Environment = "Learning"
   }
 }
