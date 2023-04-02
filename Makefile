@@ -22,7 +22,6 @@ build:
 run:
 	#run docker -> copy and paste to run manually
 	# docker run -p 8080:8080 <image_name>
-	echo ${AWS_ACCOUNT_ID}
 deploy:
 	#deploy to container registry
 	# Retrieve an authentication token and authenticate your Docker client to your registry.
