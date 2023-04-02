@@ -33,21 +33,11 @@ resource "aws_codebuild_project" "example" {
   }
   environment {
     compute_type                = "BUILD_GENERAL1_SMALL"
-    image                       = "aws/codebuild/standard:4.0"
+    image                       = "aws/codebuild/amazonlinux2-x86_64-standard:4.0"
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
     privileged_mode             = true
 
-    # environment_variable {
-    #   name  = "SOME_KEY1"
-    #   value = "SOME_VALUE1"
-    # }
-
-    # environment_variable {
-    #   name  = "SOME_KEY2"
-    #   value = "SOME_VALUE2"
-    #   type  = "PARAMETER_STORE"
-    # }
   }
 
   service_role = "arn:aws:iam::247232402049:role/code-build-only-aws-service-role"
@@ -58,6 +48,7 @@ resource "aws_codebuild_project" "example" {
     location            = "https://github.com/brettsteph/python-for-devops.git"
     git_clone_depth     = 1
     report_build_status = true
+
   }
   badge_enabled = true
 
