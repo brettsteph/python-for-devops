@@ -9,6 +9,9 @@ tasks:
     before: virtualenv .venv
     command: source .venv/bin/activate
     # init: make
+  - name: Install Terraform
+    before: chmod +x install_terraform.sh
+    command: ./install_terraform.sh
   - name: Export AWS Credentials
     before: chmod +x aws_credentials.sh
     command: ./aws_credentials.sh
