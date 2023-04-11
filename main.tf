@@ -18,6 +18,10 @@ variable "github_token" {
 output "token" {
   value = var.github_token
 }
+# Create ECR Repo
+resource "aws_ecr_repository" "python-app" {
+  name = "python-app"
+}
 
 resource "aws_codebuild_source_credential" "example" {
   auth_type   = "PERSONAL_ACCESS_TOKEN"
@@ -76,4 +80,53 @@ resource "aws_codebuild_webhook" "example" {
     #   pattern = "main"
     # }
   }
+}
+
+# Define the App Runner service
+resource "aws_apprunner_service" "python-app" {
+  name              = "python-app-service"
+  source_configuration {
+    authentication_configuration {
+      connection_arn = aws_apprunner_connection.python-app.arn
+    }
+    image_repository_type = "ECR"
+    image_configuration {
+      image_identifier = "${aws_ecr_repository.python-app.repository_url}:latest"
+    }
+  }
+  instance_configuration {
+    instance_role_arn = aws_iam_role.apprunner.arn
+  }
+}
+
+# Define the App Runner connection to the ECR repository
+resource "aws_apprunner_connection" "python-app" {
+  name = "python-app-connection"
+  provider_type = "ECR"
+  tags = {
+    Name = "python-app-connection"
+  }
+}
+
+# Define the IAM role for the App Runner service
+resource "aws_iam_role" "apprunner" {
+  name = "apprunner-role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "build.apprunner.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+# Attach policy to the IAM role
+resource "aws_iam_role_policy_attachment" "apprunner" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSAppRunnerServicePolicyForECRAccess"
+  role       = aws_iam_role.apprunner.name
 }
