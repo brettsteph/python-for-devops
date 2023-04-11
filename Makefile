@@ -31,10 +31,10 @@ deploy:
 	# Retrieve an authentication token and authenticate your Docker client to your registry.
 	aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 247232402049.dkr.ecr.us-east-1.amazonaws.com
 	# Build your Docker image using the following command
-	docker build -t fastapi-wiki .
+	docker build -t python-app .
 	# Tag your image so you can push the image to this repository.
-	docker tag fastapi-wiki:latest 247232402049.dkr.ecr.us-east-1.amazonaws.com/fastapi-wiki:latest
+	docker tag python-app:latest 247232402049.dkr.ecr.us-east-1.amazonaws.com/python-app:latest
 	# Push this image to your newly created AWS repository
-	docker push 247232402049.dkr.ecr.us-east-1.amazonaws.com/fastapi-wiki:latest
-all: install lint test pre-deploy
+	docker push 247232402049.dkr.ecr.us-east-1.amazonaws.com/python-app:latest
+all: install lint test deploy
 	
