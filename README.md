@@ -1,5 +1,5 @@
 [![Python application with Github Actions](https://github.com/brettsteph/python-for-devops/actions/workflows/devops.yml/badge.svg)](https://github.com/brettsteph/python-for-devops/actions/workflows/devops.yml)
-[![Python application with Github Actions](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiRnJHZzVEUDJBUXVQQjAzbFU4MHVlNjJDMGlHR3Vnbm0wMGZXdERoaHl5eE5lUzd2aWVwZi8xSVFobzNQVk5mY1BGWkNoUEVqdG1mYlZQcWt4TllXQnBzPSIsIml2UGFyYW1ldGVyU3BlYyI6ImZ0KzVhR2JFaGdRWTRiejAiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=main)
+[![Python application with Github Actions](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiZGVCNUhCcFBqU0dnSUdoWFdLVWdjWmtGS0RqZyt5Mk9abytPK1BjKy9Mdmx5aVorem0xeGhQMW94RHZyVlN2dWc4SVFLQk1oT3dkdWljU2RXK2JwK2ZvPSIsIml2UGFyYW1ldGVyU3BlYyI6IkNGM1JkbEFCVEdZZ0lKZmIiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=main)
 
 
 # python-for-devops
