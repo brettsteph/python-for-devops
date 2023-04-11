@@ -9,11 +9,14 @@ terraform {
 
 provider "aws" {
   # Configuration options
-  region = "us-east-1"
+  region = var.aws_region
   access_key = var.aws_access_key
   secret_key = var.aws_secret_key
 }
 
+variable "aws_region" {
+  type = string  
+}
 variable "aws_access_key" {
   type = string
 }
