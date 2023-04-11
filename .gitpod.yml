@@ -18,7 +18,7 @@ tasks:
       export TF_VAR_aws_access_key="$AWS_ACCESS_KEY_ID"
       export TF_VAR_aws_secret_key="$AWS_SECRETS_ACCESS_KEY"
       export TF_VAR_AWS_DEFAULT_REGION="us-east-1"
-      export TF_VAR_github_token = "$GITHUB_PERSONAL_ACCESS_TOKEN"
+      export TF_VAR_github_token="$GITHUB_PERSONAL_ACCESS_TOKEN"
     command: |
       terraform init
       terraform validate      
