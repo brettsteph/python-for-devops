@@ -28,6 +28,13 @@ variable "github_token" {
   type = string
   # default = "GITHUB_PERSONAL_ACCESS_TOKEN"
 }
+
+output "access_key" {
+  value = var.aws_access_key
+}
+output "secret_key" {
+  value = var.aws_secret_key
+}
 output "token" {
   value = var.github_token
 }
