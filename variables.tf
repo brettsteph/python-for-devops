@@ -1,0 +1,16 @@
+variable "aws_region" {
+  type = string  
+}
+variable "aws_account_id" {
+  type = string
+}
+variable "aws_access_key" {
+  type = string
+}
+variable "aws_secret_key" {
+  type = string
+}
+variable "github_token" {
+  type = string
+  # default = "GITHUB_PERSONAL_ACCESS_TOKEN"
+}
