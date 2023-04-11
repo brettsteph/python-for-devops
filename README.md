@@ -6,7 +6,7 @@
 
 ## Scaffold CICD
 
-![Drawing sketchpad](https://user-images.githubusercontent.com/3052677/231304851-0755f670-cbc6-4240-8a7b-942698809e37.png)
+![Drawing sketchpad (1)](https://user-images.githubusercontent.com/3052677/231305098-4a1071c7-9661-4c0a-a4b9-f1888740f42f.png)
 
 ### Setup
 
