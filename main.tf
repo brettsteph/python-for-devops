@@ -10,10 +10,20 @@ terraform {
 provider "aws" {
   # Configuration options
   region = "us-east-1"
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
+}
+
+variable "aws_access_key" {
+  type = string
+}
+variable "aws_secret_key" {
+  type = string
 }
 
 variable "github_token" {
   type = string
+  # default = "GITHUB_PERSONAL_ACCESS_TOKEN"
 }
 output "token" {
   value = var.github_token
@@ -84,15 +94,17 @@ resource "aws_codebuild_webhook" "example" {
 
 # Define the App Runner service
 resource "aws_apprunner_service" "python-app" {
-  name              = "python-app-service"
+  service_name              = "python-app-service"
   source_configuration {
-    authentication_configuration {
-      connection_arn = aws_apprunner_connection.python-app.arn
-    }
-    image_repository_type = "ECR"
-    image_configuration {
+    image_repository {
+      image_configuration {
+        port = "8080"
+      }
+      # image_identifier      = "public.ecr.aws/aws-containers/hello-app-runner:latest"
       image_identifier = "${aws_ecr_repository.python-app.repository_url}:latest"
+      image_repository_type = "ECR"
     }
+    auto_deployments_enabled = true
   }
   instance_configuration {
     instance_role_arn = aws_iam_role.apprunner.arn
@@ -101,8 +113,8 @@ resource "aws_apprunner_service" "python-app" {
 
 # Define the App Runner connection to the ECR repository
 resource "aws_apprunner_connection" "python-app" {
-  name = "python-app-connection"
-  provider_type = "ECR"
+  connection_name = "python-app-connection"
+  provider_type = "GITHUB"
   tags = {
     Name = "python-app-connection"
   }
