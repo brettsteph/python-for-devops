@@ -22,6 +22,10 @@ build:
 run:
 	#run docker -> copy and paste to run manually
 	# docker run -p 8080:8080 <image_name>
+pre-deploy:
+	terraform init
+	terraform validate
+	terraform apply --auto-approve
 deploy:
 	#deploy to container registry
 	# Retrieve an authentication token and authenticate your Docker client to your registry.
@@ -32,5 +36,5 @@ deploy:
 	docker tag fastapi-wiki:latest 247232402049.dkr.ecr.us-east-1.amazonaws.com/fastapi-wiki:latest
 	# Push this image to your newly created AWS repository
 	docker push 247232402049.dkr.ecr.us-east-1.amazonaws.com/fastapi-wiki:latest
-all: install lint test deploy
+all: install lint test pre-deploy
 	
