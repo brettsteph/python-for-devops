@@ -4,6 +4,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "4.60.0"
     }
+    # docker = {
+    #   source = "kreuzwerker/docker"
+    #   version = "3.0.2"
+    # }
   }
 }
 
@@ -13,35 +17,43 @@ provider "aws" {
   access_key = var.aws_access_key
   secret_key = var.aws_secret_key
 }
+# provider "docker" {
+#   # Configuration options
+# }
 
-variable "aws_region" {
-  type = string  
-}
-variable "aws_access_key" {
-  type = string
-}
-variable "aws_secret_key" {
-  type = string
-}
+# resource "docker_image" "my_image" {
+#   name          = "fastapi-wiki"
+#   build {
+#     context = "."
+#   }
+# }
 
-variable "github_token" {
-  type = string
-  # default = "GITHUB_PERSONAL_ACCESS_TOKEN"
-}
-
-output "access_key" {
-  value = var.aws_access_key
-}
-output "secret_key" {
-  value = var.aws_secret_key
-}
-output "token" {
-  value = var.github_token
-}
 # Create ECR Repo
 resource "aws_ecr_repository" "python-app" {
   name = "python-app"
+  image_tag_mutability = "MUTABLE"
+
+  force_delete = true
+
+  image_scanning_configuration {
+    scan_on_push = false
+  }
 }
+
+resource "null_resource" "docker_build" {
+  provisioner "local-exec" {
+    # command = "docker build -t ${aws_ecr_repository.python-app.repository_url}:latest ."
+    command = <<EOT
+      "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${aws_account_id}.dkr.ecr.us-east-1.amazonaws.com" 
+      "docker build -t ${aws_ecr_repository.my_repository.repository_url}:latest ." 
+      "docker push ${aws_account_id}.dkr.ecr.us-east-1.amazonaws.com/${aws_ecr_repository.my_repository.name}:latest"
+    EOT
+  }
+  depends_on = [
+    aws_ecr_repository.python-app
+  ]
+}
+
 
 resource "aws_codebuild_source_credential" "example" {
   auth_type   = "PERSONAL_ACCESS_TOKEN"
@@ -102,35 +114,43 @@ resource "aws_codebuild_webhook" "example" {
   }
 }
 
-# Define the App Runner service
-resource "aws_apprunner_service" "python-app" {
-  service_name              = "python-app-service"
+resource "time_sleep" "waitrolecreate" {
+  depends_on = [aws_iam_role.apprunner]
+  create_duration = "45s"
+}
+
+resource "aws_apprunner_service" "my-app-runner" {
+  depends_on = [time_sleep.waitrolecreate]
+  service_name = "python-app-service"
   source_configuration {
+    authentication_configuration {
+      access_role_arn = aws_iam_role.apprunner.arn
+    }
     image_repository {
       image_configuration {
-        port = "8080"
+        port = 8080
       }
-      # image_identifier      = "public.ecr.aws/aws-containers/hello-app-runner:latest"
-      image_identifier = "${aws_ecr_repository.python-app.repository_url}:latest"
+      image_identifier      = "${aws_ecr_repository.python-app.repository_url}:latest"
       image_repository_type = "ECR"
     }
     auto_deployments_enabled = true
   }
-  instance_configuration {
-    instance_role_arn = aws_iam_role.apprunner.arn
-  }
 }
 
-# Define the App Runner connection to the ECR repository
-resource "aws_apprunner_connection" "python-app" {
-  connection_name = "python-app-connection"
-  provider_type = "GITHUB"
-  tags = {
-    Name = "python-app-connection"
-  }
+# # Define the App Runner connection to the ECR repository
+# resource "aws_apprunner_connection" "python-app" {
+#   connection_name = "python-app-connection"
+#   provider_type = "GITHUB"
+#   tags = {
+#     Name = "python-app-connection"
+#   }
+# }
+
+data "aws_iam_policy" "AWSAppRunnerServicePolicyForECRAccess" {
+  arn = "arn:aws:iam::aws:policy/service-role/AWSAppRunnerServicePolicyForECRAccess"
 }
 
-# Define the IAM role for the App Runner service
+# Define trust policy IAM role for the App Runner service
 resource "aws_iam_role" "apprunner" {
   name = "apprunner-role"
   assume_role_policy = jsonencode({
@@ -149,6 +169,6 @@ resource "aws_iam_role" "apprunner" {
 
 # Attach policy to the IAM role
 resource "aws_iam_role_policy_attachment" "apprunner" {
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSAppRunnerServicePolicyForECRAccess"
+  policy_arn = data.aws_iam_policy.AWSAppRunnerServicePolicyForECRAccess.arn
   role       = aws_iam_role.apprunner.name
 }
