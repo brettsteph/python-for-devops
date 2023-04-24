@@ -1,3 +1,12 @@
+setup: 
+	# Create Virtual Environment
+	python3 -m venv .venv
+activate:
+	# Activate .venv
+	source .venv/bin/activate
+deactivate:
+	# Deactivate .venv
+	source .venv/bin/deactivate
 install:
 	#install
 	python -m pip install --upgrade pip
@@ -36,5 +45,7 @@ deploy:
 	docker tag python-app:latest 247232402049.dkr.ecr.us-east-1.amazonaws.com/python-app:latest
 	# Push this image to your newly created AWS repository
 	docker push 247232402049.dkr.ecr.us-east-1.amazonaws.com/python-app:latest
-all: install lint test deploy
+destroy:
+	terraform destroy --auto-approve
+all: install lint test pre-deploy deploy
 	

@@ -4,33 +4,20 @@ terraform {
       source  = "hashicorp/aws"
       version = "4.60.0"
     }
-    # docker = {
-    #   source = "kreuzwerker/docker"
-    #   version = "3.0.2"
-    # }
   }
 }
 
 provider "aws" {
   # Configuration options
   region = var.aws_region
-  access_key = var.aws_access_key
-  secret_key = var.aws_secret_key
+  # access_key = var.aws_access_key
+  # secret_key = var.aws_secret_key
 }
-# provider "docker" {
-#   # Configuration options
-# }
 
-# resource "docker_image" "my_image" {
-#   name          = "fastapi-wiki"
-#   build {
-#     context = "."
-#   }
-# }
 
 # Create ECR Repo
 resource "aws_ecr_repository" "python-app" {
-  name = "python-app"
+  name                 = "python-app"
   image_tag_mutability = "MUTABLE"
 
   force_delete = true
@@ -41,13 +28,13 @@ resource "aws_ecr_repository" "python-app" {
 }
 
 resource "null_resource" "docker_build" {
-  provisioner "local-exec" {
-    # command = "docker build -t ${aws_ecr_repository.python-app.repository_url}:latest ."
-    command = <<EOT
-      "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${aws_account_id}.dkr.ecr.us-east-1.amazonaws.com" 
-      "docker build -t ${aws_ecr_repository.my_repository.repository_url}:latest ." 
-      "docker push ${aws_account_id}.dkr.ecr.us-east-1.amazonaws.com/${aws_ecr_repository.my_repository.name}:latest"
-    EOT
+  provisioner "local-exec" {    
+    command = <<EOF
+    aws ecr get-login-password --region ${var.aws_region} | docker login --username AWS --password-stdin ${var.aws_account_id}.dkr.ecr.${var.aws_region}.amazonaws.com
+    docker build -t ${aws_ecr_repository.python-app.repository_url}:latest .
+    docker push ${var.aws_account_id}.dkr.ecr.${var.aws_region}.amazonaws.com/${aws_ecr_repository.python-app.name}:latest
+    EOF
+    # docker tag python-app:latest ${var.aws_account_id}.dkr.ecr.us-east-1.amazonaws.com/python-app:latest
   }
   depends_on = [
     aws_ecr_repository.python-app
@@ -62,7 +49,7 @@ resource "aws_codebuild_source_credential" "example" {
 }
 
 resource "aws_codebuild_project" "example" {
-  name = "fastapi-wiki-service"
+  name = "python-app-service"
   artifacts {
 
     type = "NO_ARTIFACTS"
@@ -114,13 +101,14 @@ resource "aws_codebuild_webhook" "example" {
   }
 }
 
+# Because IAM role is no always available upon creation
 resource "time_sleep" "waitrolecreate" {
-  depends_on = [aws_iam_role.apprunner]
+  depends_on      = [aws_iam_role.apprunner]
   create_duration = "45s"
 }
 
 resource "aws_apprunner_service" "my-app-runner" {
-  depends_on = [time_sleep.waitrolecreate]
+  depends_on   = [time_sleep.waitrolecreate]
   service_name = "python-app-service"
   source_configuration {
     authentication_configuration {
@@ -137,14 +125,14 @@ resource "aws_apprunner_service" "my-app-runner" {
   }
 }
 
-# # Define the App Runner connection to the ECR repository
-# resource "aws_apprunner_connection" "python-app" {
-#   connection_name = "python-app-connection"
-#   provider_type = "GITHUB"
-#   tags = {
-#     Name = "python-app-connection"
-#   }
-# }
+# Define the App Runner connection to the ECR repository
+resource "aws_apprunner_connection" "python-app" {
+  connection_name = "python-app-connection"
+  provider_type = "GITHUB"
+  tags = {
+    Name = "python-app-connection"
+  }
+}
 
 data "aws_iam_policy" "AWSAppRunnerServicePolicyForECRAccess" {
   arn = "arn:aws:iam::aws:policy/service-role/AWSAppRunnerServicePolicyForECRAccess"
