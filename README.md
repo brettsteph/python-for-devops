@@ -36,7 +36,7 @@ activate:
 	source .venv/bin/activate
 deactivate:
 	# Deactivate .venv
-	source .venv/bin/deactivate
+	source deactivate
 install:
 	#install
 	python -m pip install --upgrade pip
